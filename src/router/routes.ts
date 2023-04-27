@@ -5,10 +5,10 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      { path: '', component: () => import('../components/LoginComponent.vue') },
+      { path: '', component: () => import('../pages/LoginPage.vue') },
       {
         path: '/singup',
-        component: () => import('../components/SingupComponent.vue'),
+        component: () => import('../pages/SingupPage.vue'),
       },
     ],
   },
@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: '/recursos', component: () => import('pages/RecursosPage.vue') },
+      { path: '/user', component: () => import('pages/UserPage.vue') },
     ],
   },
   {

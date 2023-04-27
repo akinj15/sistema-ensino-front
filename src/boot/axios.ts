@@ -6,26 +6,31 @@ declare module '@vue/runtime-core' {
   }
 }
 const api = axios.create({
-  baseURL: 'localhost:3001/',
+  baseURL: 'http://localhost:3001/',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  }
 });
 
 /**
  * Methods HTTP for interactions Ajax
  */
 
-const getData = async (url: string) => {
+const getData = (url: string) => {
   return api.get(url);
 };
 
-const postData = async (url: string, data: object) => {
+const postData = (url: string, data: any): Promise<any> => {
   return api.post(url, data);
 };
 
-const putData = async (url: string, data: object) => {
+const putData = (url: string, data: any) => {
   return api.put(url, data);
 };
 
-const deleteData = async (url: string) => {
+const deleteData = (url: string) => {
   return api.delete(url);
 };
 export default {

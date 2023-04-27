@@ -25,34 +25,28 @@ export const useLoginStore = defineStore('login', {
   }),
   getters: {},
   actions: {
-    async login(dados: any) {
-      if (dados.user && dados.password) {
+    async login(user: string, password: string) {
+      if (user && password) {
         const dadosEnvio = {
-          userName: dados.userName,
-          password: dados.password,
+          userName: user,
+          password: password,
         };
-        console.log(dados, 111);
-        let response: any;
-        try {
           window.localStorage.clear();
-          response = await api.postData('/user/login', dadosEnvio);
-
-          window.localStorage.setItem('session', response.data.token);
+          const response = await api.postData('/user/login', dadosEnvio);
+          this.user = response.data.user;
+          window.localStorage.setItem('token', response.data.token);
+      }
+    },
+    async createUser(dados: UserModel) {
+      console.log(1111, dados.userName && dados.password && dados.profile.firstName && dados.email)
+      if(dados.userName && dados.password && dados.profile.firstName && dados.email) {
+        try {
+          const response = await api.postData('/user', dados);
+          this.user = response.data;
         } catch (e) {
           return e;
         }
       }
-    },
-    async createUser(dados: UserModel) {
-      if (!dados)
-        try {
-          window.localStorage.clear();
-          const response = await api.postData('/user', dados);
-          this.user = response.data;
-          window.localStorage.setItem('session', response.data.token);
-        } catch (e) {
-          return e;
-        }
     },
   },
 });

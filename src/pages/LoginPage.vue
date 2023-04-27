@@ -5,18 +5,20 @@
     </div>
     <div class="text-h6 text-center q-pb-md">SING IN</div>
     <q-input
-      class="q-my-sm"
+      class=""
       outlined
       v-model="user"
       label="Login"
       type="text"
+      :rules="[val => !!val || '']"
     />
     <q-input
-      class="q-my-sm"
+      class=""
       outlined
       v-model="password"
       label="Password"
       type="password"
+      :rules="[val => !!val || '']"
     />
     <q-btn
       label="sing in"
@@ -44,17 +46,11 @@ const loginStore = useLoginStore();
 const user = ref('');
 const password = ref('');
 const $q = useQuasar();
-async function logar() {
-  try {
-    await loginStore.login({
-      userName: user.value,
-      password: password.value,
-    });
-    // router.push({ path: '/home' });
-    console.log(111, loginStore.login);
+async function logar () {
+  try{
+    await loginStore.login(user.value, password.value);
   } catch (e) {
-    $q.loading.hide();
-    console.log(e);
+    return e;
   }
 }
 async function singup() {
@@ -65,5 +61,6 @@ async function singup() {
 .card {
   width: 30%;
   min-width: 300px;
+  padding-bottom: 100px;
 }
 </style>

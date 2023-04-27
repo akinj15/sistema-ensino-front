@@ -12,6 +12,8 @@ import { ref } from 'vue';
 
 <style scoped>
 .altura {
-  padding-top: 15vh;
+  display: flex;
+  align-items: center;
+  height: 100vh;
 }
 </style>
