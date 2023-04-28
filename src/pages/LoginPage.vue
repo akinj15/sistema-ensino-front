@@ -10,7 +10,7 @@
       v-model="user"
       label="Login"
       type="text"
-      :rules="[val => !!val || '']"
+      :rules="[(val) => !!val || '']"
     />
     <q-input
       class=""
@@ -18,7 +18,7 @@
       v-model="password"
       label="Password"
       type="password"
-      :rules="[val => !!val || '']"
+      :rules="[(val) => !!val || '']"
     />
     <q-btn
       label="sing in"
@@ -46,9 +46,11 @@ const loginStore = useLoginStore();
 const user = ref('');
 const password = ref('');
 const $q = useQuasar();
-async function logar () {
-  try{
+async function logar() {
+  try {
     await loginStore.login(user.value, password.value);
+
+    router.push({ path: '/index' });
   } catch (e) {
     return e;
   }

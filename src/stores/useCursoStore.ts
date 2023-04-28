@@ -1,27 +1,21 @@
 import { defineStore } from 'pinia';
 import api from '../boot/axios';
 import UserModel from '../models/User';
-export const useLoginStore = defineStore('login', {
+export const useCursoStore = defineStore('Curso', {
   state: () => ({
-    user: {
-      userName: String,
-      password: String,
-      token: String,
-      _id: String,
-      email: String,
-      role: Array,
-      profile: {
-        firstName: String,
-        lastName: String,
-        bio: String,
-        description: String,
-      },
+    curso: {
+      title: '',
+      description: '',
+      bio: '',
+      price: '',
+      grid: [],
     },
-    userName: String,
-    password: String,
-    token: String,
-    _id: String,
-    email: String,
+    grid: {
+      dateScheduled: '',
+      info: '',
+      classHeld: false,
+    },
+    cursos: [],
   }),
   getters: {},
   actions: {
@@ -38,26 +32,19 @@ export const useLoginStore = defineStore('login', {
         window.localStorage.setItem('id', response.data.user._id);
       }
     },
-    async createUser(dados: UserModel) {
-      if (
-        dados.userName &&
-        dados.password &&
-        dados.profile.firstName &&
-        dados.email
-      ) {
-        try {
-          const response = await api.postData('/user', dados);
-          this.user = response.data;
-        } catch (e) {
-          return e;
-        }
+
+    async createCurso(dados: UserModel) {
+      try {
+        const response = await api.postData('/user', dados);
+        this.user = response.data;
+      } catch (e) {
+        return e;
       }
     },
-    async updateUser(dados: any) {
-      console.log('--->', dados);
+
+    async updateCurso(dados: any) {
       if (dados.userName && dados.profile.firstName && dados._id) {
         try {
-          console.log(dados, 'mopa');
           const token: string = window.localStorage.getItem('token') || '';
           const response = await api.putData(
             '/user',
@@ -80,12 +67,15 @@ export const useLoginStore = defineStore('login', {
         },
       };
     },
-    async getUserId() {
+
+    async getCursoId() {
       const token: string = window.localStorage.getItem('token') || '';
       const _id: string = window.localStorage.getItem('id') || '';
-      console.log('-->', _id);
       try {
-        if (!_id) throw new Error('caiu');
+        if (_id.length < 2) {
+          console.log('-->', _id);
+          return { e: 'deu ruin' };
+        }
         const response = await api.getData(
           'user/?id=' + _id,
           this.montaHeaders(token)
@@ -96,15 +86,16 @@ export const useLoginStore = defineStore('login', {
         return e;
       }
     },
-    async geTodes() {
+
+    async getTodes() {
       const token: string = window.localStorage.getItem('token') || '';
       try {
         const response = await api.getData(
-          'user/getall',
+          'curso/getall',
           this.montaHeaders(token)
         );
         console.log('-->', response);
-        this.user = response.data;
+        this.curso = response.data;
       } catch (e) {
         return e;
       }

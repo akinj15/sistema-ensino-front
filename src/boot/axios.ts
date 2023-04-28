@@ -11,27 +11,27 @@ const api = axios.create({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  }
+  },
 });
 
 /**
  * Methods HTTP for interactions Ajax
  */
 
-const getData = (url: string) => {
-  return api.get(url);
+const getData = (url: string, config?: any) => {
+  return api.get(url, config);
 };
 
-const postData = (url: string, data: any): Promise<any> => {
-  return api.post(url, data);
+const postData = (url: string, data: any, config?: any): Promise<any> => {
+  return api.post(url, data, config);
 };
 
-const putData = (url: string, data: any) => {
-  return api.put(url, data);
+const putData = (url: string, data: any, config?: any) => {
+  return api.put(url, data, config);
 };
 
-const deleteData = (url: string) => {
-  return api.delete(url);
+const deleteData = (url: string, config?: any) => {
+  return api.delete(url, config);
 };
 export default {
   getData,

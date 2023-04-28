@@ -12,7 +12,7 @@
           v-model="firstName"
           label="fist name"
           lazy-rules
-          :rules="[val => !!val || '']"
+          :rules="[(val) => !!val || '']"
           type="text"
         />
       </div>
@@ -24,7 +24,7 @@
           label="last name"
           type="text"
           lazy-rules
-          :rules="[val => !!val || '']"
+          :rules="[(val) => !!val || '']"
         />
       </div>
       <div class="one">
@@ -35,7 +35,7 @@
           label="user name"
           type="text"
           lazy-rules
-          :rules="[val => !!val || '']"
+          :rules="[(val) => !!val || '']"
         />
       </div>
       <div class="one">
@@ -46,7 +46,7 @@
           label="email"
           type="text"
           lazy-rules
-          :rules="[val => regex.test(val) || '']"
+          :rules="[(val) => regex.test(val) || '']"
         />
       </div>
       <div class="one">
@@ -57,7 +57,9 @@
           label="Password"
           type="password"
           lazy-rules
-          :rules="[val => val.length >= 8 || 'deve conter pelo menos 8 caracters']"
+          :rules="[
+            (val) => val.length >= 8 || 'deve conter pelo menos 8 caracters',
+          ]"
         />
       </div>
       <div class="filhos">
@@ -76,7 +78,6 @@
           class="full-width"
         />
       </div>
-
     </div>
   </div>
 </template>
@@ -98,7 +99,6 @@ const password = ref('');
 const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const $q = useQuasar();
 async function createUser() {
-
   try {
     let dados = {
       userName: userName.value,
@@ -111,9 +111,9 @@ async function createUser() {
         description: ' ',
       },
       role: ['ALUNO'],
-    }
+    };
     loginStore.createUser(dados);
-    // router.push({ path: '/' });
+    router.push({ path: '/' });
   } catch (e) {
     console.log('1111', e);
   }
@@ -138,7 +138,7 @@ async function back() {
   width: 47%;
 }
 
-.one{
+.one {
   width: 100%;
 }
 </style>
