@@ -89,6 +89,7 @@
 import { useLoginStore } from 'src/stores/useLoginStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -100,7 +101,7 @@ let bio = ref(String);
 let description = ref(String);
 let _id = ref(String);
 let router = useRouter();
-
+let $q = useQuasar();
 let loginStore = useLoginStore();
 let create = async () => {
   try {
@@ -134,8 +135,17 @@ let save = async () => {
   };
   try {
     await loginStore.updateUser(dados);
+    $q.notify({
+      message: 'Usuário atualizado com sucesso',
+      position: 'top-right',
+      color: 'secondary',
+    });
   } catch (e) {
-    return e;
+    $q.notify({
+      message: 'Falha na atualização do usuário',
+      position: 'top-right',
+      color: 'red',
+    });
   }
 };
 </script>

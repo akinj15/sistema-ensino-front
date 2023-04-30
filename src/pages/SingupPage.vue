@@ -31,17 +31,6 @@
         <q-input
           class=""
           outlined
-          v-model="userName"
-          label="user name"
-          type="text"
-          lazy-rules
-          :rules="[(val) => !!val || '']"
-        />
-      </div>
-      <div class="one">
-        <q-input
-          class=""
-          outlined
           v-model="email"
           label="email"
           type="text"
@@ -61,6 +50,9 @@
             (val) => val.length >= 8 || 'deve conter pelo menos 8 caracters',
           ]"
         />
+      </div>
+      <div class="one q-mb-md">
+        <q-checkbox v-model="termos" label="Você concorda com os termos." />
       </div>
       <div class="filhos">
         <q-btn
@@ -92,6 +84,7 @@ import UserModel from '../models/User';
 const router = useRouter();
 const loginStore = useLoginStore();
 const userName = ref('');
+const termos = ref(false);
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
@@ -101,7 +94,7 @@ const $q = useQuasar();
 async function createUser() {
   try {
     let dados = {
-      userName: userName.value,
+      userName: firstName.value + ' ' + lastName.value,
       password: password.value,
       email: email.value,
       profile: {
@@ -113,9 +106,18 @@ async function createUser() {
       role: ['ALUNO'],
     };
     loginStore.createUser(dados);
+    $q.notify({
+      message: 'Usuário criado com sucesso',
+      position: 'top-right',
+      color: 'secondary',
+    });
     router.push({ path: '/' });
   } catch (e) {
-    console.log('1111', e);
+    $q.notify({
+      message: 'Falha na criação do usuário',
+      position: 'top-right',
+      color: 'red',
+    });
   }
 }
 async function back() {

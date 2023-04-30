@@ -11,7 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title clickable to="/index"> Quasar App </q-toolbar-title>
+        <q-toolbar-title clickable>
+          <q-btn flat dense to="/index" label="Sistema de ensino" />
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -23,6 +25,25 @@
             <q-icon name="person" />
           </q-item-section>
           <q-item-section> user </q-item-section>
+        </q-item>
+        <q-item clickable v-ripple to="/classe">
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+          <q-item-section> classes </q-item-section>
+        </q-item>
+        <q-item clickable v-ripple to="/curso">
+          <q-item-section avatar>
+            <q-icon name="menu_book" />
+          </q-item-section>
+          <q-item-section> cursos </q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple to="/order">
+          <q-item-section avatar>
+            <q-icon name="money" />
+          </q-item-section>
+          <q-item-section> Orders </q-item-section>
         </q-item>
         <q-item clickable v-ripple @click="sair">
           <q-item-section avatar>

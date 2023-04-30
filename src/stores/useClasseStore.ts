@@ -1,49 +1,51 @@
 import { defineStore } from 'pinia';
 import api from '../boot/axios';
-import CursoModel from '../models/Curso';
-export const useCursoStore = defineStore('Curso', {
+import ClasseModel from '../models/Classe';
+import Grid from 'src/models/Grid';
+export const useClasseStore = defineStore('Classe', {
   state: () => ({
-    curso: {
+    classe: {
       _id: '',
-      title: '',
+      classeName: '',
       description: '',
-      bio: '',
+      curso: [],
       price: '',
-      grid: [],
+      grid: Array<Grid>,
+      students: [],
     },
     grid: {
       dateScheduled: '',
       info: '',
       classHeld: false,
     },
-    cursos: Array<CursoModel>,
+    classes: Array<ClasseModel>,
   }),
   getters: {},
   actions: {
-    async createCurso(dados: any) {
+    async createClasses(dados: any) {
       console.log(dados);
       try {
         const response = await api.postData(
-          '/curso',
+          '/classe',
           dados,
           this.montaHeaders()
         );
-        this.curso = response.data;
+        this.classe = response.data;
       } catch (e) {
         return e;
       }
     },
 
-    async updateCurso(dados: any) {
-      if (dados.price && dados.title && dados._id) {
+    async updateClasse(dados: any) {
+      if (dados.price && dados.classeName && dados._id) {
         try {
           console.log(dados, 111111111);
           const response = await api.putData(
-            '/curso',
+            '/classe',
             dados,
             this.montaHeaders()
           );
-          this.curso = response.data;
+          this.classe = response.data;
         } catch (e) {
           return e;
         }
@@ -61,16 +63,16 @@ export const useCursoStore = defineStore('Curso', {
       };
     },
 
-    async getCursoId(_id: string) {
+    async getClasseId(_id: string) {
       try {
         if (_id.length < 2) {
           return { e: 'deu ruin' };
         }
         const response = await api.getData(
-          'curso/?id=' + _id,
+          'classe/?id=' + _id,
           this.montaHeaders()
         );
-        this.curso = response.data;
+        this.classe = response.data;
       } catch (e) {
         return e;
       }
@@ -78,22 +80,25 @@ export const useCursoStore = defineStore('Curso', {
 
     async getAll() {
       try {
-        const response = await api.getData('curso/getall', this.montaHeaders());
-        this.cursos = response.data;
+        const response = await api.getData(
+          'classe/getall',
+          this.montaHeaders()
+        );
+        this.classes = response.data;
       } catch (e) {
         return e;
       }
     },
-    async deleteCurso(_id: string) {
+    async deleteClasse(_id: string) {
       try {
         if (_id.length < 2) {
           return { e: 'deu ruin' };
         }
         const response = await api.deleteData(
-          'curso/?id=' + _id,
+          'classe/?id=' + _id,
           this.montaHeaders()
         );
-        this.curso = response.data;
+        this.classe = response.data;
       } catch (e) {
         return e;
       }

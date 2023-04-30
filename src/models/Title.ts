@@ -1,8 +1,8 @@
-type Title =  {
-  price: Number,
-  info: String,
-  owned: Boolean,
-  discount: Boolean,
-}
+type Title = {
+  price: number;
+  info: string;
+  owned: boolean;
+  discount: boolean;
+};
 
 export default Title;

@@ -1,49 +1,50 @@
 import { defineStore } from 'pinia';
 import api from '../boot/axios';
-import CursoModel from '../models/Curso';
-export const useCursoStore = defineStore('Curso', {
+import CheckPointModel from 'src/models/CheckPoint';
+export const useCheckPointStore = defineStore('CheckPoint', {
   state: () => ({
-    curso: {
+    checkPoint: {
       _id: '',
-      title: '',
-      description: '',
-      bio: '',
-      price: '',
-      grid: [],
-    },
-    grid: {
-      dateScheduled: '',
+      user: '',
+      moment: '',
+      scheduled: '',
+      present: false,
       info: '',
-      classHeld: false,
+      classe: '',
     },
-    cursos: Array<CursoModel>,
+    checkPoints: [],
   }),
   getters: {},
   actions: {
-    async createCurso(dados: any) {
+    async createCheckPoint(dados: any) {
       console.log(dados);
       try {
         const response = await api.postData(
-          '/curso',
+          '/checkpoint',
           dados,
           this.montaHeaders()
         );
-        this.curso = response.data;
+        this.checkPoint = response.data;
       } catch (e) {
         return e;
       }
     },
 
-    async updateCurso(dados: any) {
-      if (dados.price && dados.title && dados._id) {
+    async updateCheckPoint(dados: any) {
+      if (
+        dados.user &&
+        dados.classe &&
+        dados._id &&
+        dados.scheduled &&
+        dados.present
+      ) {
         try {
-          console.log(dados, 111111111);
           const response = await api.putData(
-            '/curso',
+            '/checkpoint',
             dados,
             this.montaHeaders()
           );
-          this.curso = response.data;
+          this.checkPoint = response.data;
         } catch (e) {
           return e;
         }
@@ -61,16 +62,17 @@ export const useCursoStore = defineStore('Curso', {
       };
     },
 
-    async getCursoId(_id: string) {
+    async getCheckPoint(classe: string, user?: string) {
       try {
-        if (_id.length < 2) {
+        if (classe.length < 2) {
           return { e: 'deu ruin' };
         }
-        const response = await api.getData(
-          'curso/?id=' + _id,
-          this.montaHeaders()
-        );
-        this.curso = response.data;
+        let url = 'checkpoint?classe=' + classe;
+        if (user) {
+          url += '&user=' + user;
+        }
+        const response = await api.getData(url, this.montaHeaders());
+        this.checkPoints = response.data;
       } catch (e) {
         return e;
       }
@@ -78,22 +80,25 @@ export const useCursoStore = defineStore('Curso', {
 
     async getAll() {
       try {
-        const response = await api.getData('curso/getall', this.montaHeaders());
-        this.cursos = response.data;
+        const response = await api.getData(
+          'checkpoint/getall',
+          this.montaHeaders()
+        );
+        this.checkPoints = response.data;
       } catch (e) {
         return e;
       }
     },
-    async deleteCurso(_id: string) {
+    async deleteCheckpoint(_id: string) {
       try {
         if (_id.length < 2) {
           return { e: 'deu ruin' };
         }
         const response = await api.deleteData(
-          'curso/?id=' + _id,
+          'checkpoint/?id=' + _id,
           this.montaHeaders()
         );
-        this.curso = response.data;
+        console.log(response.data);
       } catch (e) {
         return e;
       }

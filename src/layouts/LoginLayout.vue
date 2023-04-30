@@ -15,5 +15,11 @@ import { ref } from 'vue';
   display: flex;
   align-items: center;
   height: 100vh;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(83, 191, 218, 0.3) 200%
+  );
 }
 </style>

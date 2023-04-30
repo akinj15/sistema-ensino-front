@@ -1,11 +1,12 @@
-import Grid from "./Grid"
+import Grid from './Grid';
 
 type Curso = {
-	title: String,
-	description: String,
-	bio: String,
-  price: Number,
-	grid: Array<Grid>
-}
+  _id: string;
+  title: string;
+  description: string;
+  bio: string;
+  price: number;
+  grid: Array<Grid>;
+};
 
 export default Curso;

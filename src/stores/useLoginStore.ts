@@ -22,13 +22,14 @@ export const useLoginStore = defineStore('login', {
     token: String,
     _id: String,
     email: String,
+    users: [],
   }),
   getters: {},
   actions: {
-    async login(user: string, password: string) {
-      if (user && password) {
+    async login(email: string, password: string) {
+      if (email && password) {
         const dadosEnvio = {
-          userName: user,
+          email: email,
           password: password,
         };
         window.localStorage.clear();
@@ -104,7 +105,7 @@ export const useLoginStore = defineStore('login', {
           this.montaHeaders(token)
         );
         console.log('-->', response);
-        this.user = response.data;
+        this.users = response.data;
       } catch (e) {
         return e;
       }

@@ -1,11 +1,11 @@
 type CheckPoints = {
-	user: String,
-	service: String,
-	moment: Date,
-	scheduled: Date,
-	present: Boolean,
-	info: String,
-	classe: String,
-}
+  user: string;
+  service: string;
+  moment: Date;
+  scheduled: Date;
+  present: boolean;
+  info: string;
+  classe: string;
+};
 
 export default CheckPoints;

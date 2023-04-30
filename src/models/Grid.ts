@@ -1,7 +1,7 @@
 type Grid = {
-	dateScheduled: Date,
-	info: String,
-	classHeld: Boolean | null
-}
+  dateScheduled: Date;
+  info: string;
+  classHeld: boolean | null;
+};
 
 export default Grid;

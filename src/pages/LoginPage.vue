@@ -1,16 +1,16 @@
 <template>
   <div class="card">
     <div class="text-center">
-      <q-avatar text-color="black" icon="person" size="150px" />
+      <q-avatar text-color="black" icon="o_person" size="150px" />
     </div>
     <div class="text-h6 text-center q-pb-md">SING IN</div>
     <q-input
       class=""
       outlined
-      v-model="user"
-      label="Login"
+      v-model="email"
+      label="Email"
       type="text"
-      :rules="[(val) => !!val || '']"
+      :rules="[(val) => regex.test(val) || '']"
     />
     <q-input
       class=""
@@ -18,6 +18,7 @@
       v-model="password"
       label="Password"
       type="password"
+      @keyup.enter="logar()"
       :rules="[(val) => !!val || '']"
     />
     <q-btn
@@ -41,14 +42,23 @@ import { useLoginStore } from 'src/stores/useLoginStore';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 
+const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const router = useRouter();
 const loginStore = useLoginStore();
-const user = ref('');
+const email = ref('');
 const password = ref('');
 const $q = useQuasar();
 async function logar() {
   try {
-    await loginStore.login(user.value, password.value);
+    if (!email.value.length || !password.value.length) {
+      $q.notify({
+        message: 'Informe as informações necessarias',
+        position: 'top-right',
+        color: 'red',
+      });
+      return;
+    }
+    await loginStore.login(email.value, password.value);
 
     router.push({ path: '/index' });
   } catch (e) {
