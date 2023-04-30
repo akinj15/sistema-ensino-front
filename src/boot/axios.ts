@@ -6,7 +6,7 @@ declare module '@vue/runtime-core' {
   }
 }
 const api = axios.create({
-  baseURL: 'http://181.191.171.173:3001/',
+  baseURL: 'https://sistema-de-ensino.onrender.com/',
 });
 
 /**
