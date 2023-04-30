@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-start q-pa-lg q-gutter-md">
+  <q-page class="row justify-evenly q-pa-lg q-gutter-md">
     <q-card
       v-for="classe in classeStore.classes"
       :key="classe._id"
