@@ -6,13 +6,7 @@ declare module '@vue/runtime-core' {
   }
 }
 const api = axios.create({
-  baseURL: 'http://localhost:3001/',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    Accept: 'application/json, text/plain, */*',
-  },
+  baseURL: 'http://181.191.171.173:3001/',
 });
 
 /**
